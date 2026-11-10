@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: earthnest-eco-store
+    runtime: node
+    plan: starter
+    buildCommand: unzip -o "EarthNest-GitHub-Upload (1).zip" -d app
+    startCommand: cd app && mkdir -p /var/data && if [ ! -f /var/data/db.json ]; then cp db.example.json /var/data/db.json; fi && DATA_FILE=/var/data/db.json node server.js
+    envVars:
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        generateValue: true
+    disk:
+      name: earthnest-data
+      mountPath: /var/data
+      sizeGB: 1
